@@ -29,7 +29,6 @@ export type FormValues = {
   cobertura_geografica: string;
   disponibilidad: string;
   capacidad: string;
-  autoriza_datos: boolean;
 };
 
 export type FormState = {
@@ -63,7 +62,6 @@ export type OfertaRow = {
   cobertura_geografica: string | null;
   disponibilidad: string | null;
   capacidad: string | null;
-  autoriza_datos: boolean;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -112,7 +110,6 @@ export function validateOferta(formData: FormData): {
     cobertura_geografica: str(formData, "cobertura_geografica"),
     disponibilidad: str(formData, "disponibilidad"),
     capacidad: str(formData, "capacidad"),
-    autoriza_datos: checkbox(formData, "autoriza_datos"),
   };
 
   // --- Quién ofrece la ayuda ---
@@ -214,11 +211,6 @@ export function validateOferta(formData: FormData): {
     errors.capacidad = `Máximo ${LIMITS.capacidad} caracteres.`;
   }
 
-  // --- Habeas data ---
-  if (!values.autoriza_datos) {
-    errors.autoriza_datos = "Debes autorizar el tratamiento de tus datos para continuar.";
-  }
-
   if (Object.keys(errors).length > 0) {
     return { errors, values };
   }
@@ -246,7 +238,6 @@ export function validateOferta(formData: FormData): {
     cobertura_geografica: opt(values.cobertura_geografica),
     disponibilidad: opt(values.disponibilidad),
     capacidad: opt(values.capacidad),
-    autoriza_datos: true,
   };
 
   return { row, errors, values };

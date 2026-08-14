@@ -33,9 +33,7 @@ export default function Home() {
       <footer className="border-t border-border">
         <div className="mx-auto max-w-2xl px-4 py-6 text-xs leading-relaxed text-muted">
           La información registrada se usará únicamente para coordinar la respuesta a la
-          emergencia por el sismo del 10 de agosto de 2026 y no será publicada sin tu
-          autorización. Tratamiento de datos personales conforme a la Ley 1581 de 2012
-          (habeas data).
+          emergencia por el sismo del 10 de agosto de 2026.
         </div>
       </footer>
     </>

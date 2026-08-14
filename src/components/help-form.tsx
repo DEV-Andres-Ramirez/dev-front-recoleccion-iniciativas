@@ -513,31 +513,6 @@ function InnerForm({ onReset }: { onReset: () => void }) {
         />
       </Section>
 
-      <Section step={5} title="Autorización de datos">
-        <label className="flex cursor-pointer items-start gap-3">
-          <input
-            type="checkbox"
-            name="autoriza_datos"
-            defaultChecked={values?.autoriza_datos}
-            required
-            aria-invalid={errors.autoriza_datos ? true : undefined}
-            aria-describedby={errors.autoriza_datos ? "autoriza-datos-error" : undefined}
-            className="mt-0.5 h-5 w-5 shrink-0 accent-primary"
-          />
-          <span className="text-sm leading-relaxed">
-            Autorizo el tratamiento de mis datos personales conforme a la{" "}
-            <strong>Ley 1581 de 2012</strong> (habeas data). Esta información se usará
-            únicamente para coordinar la respuesta a la emergencia y no será publicada
-            sin mi autorización.
-          </span>
-        </label>
-        {errors.autoriza_datos && (
-          <p id="autoriza-datos-error" className="text-sm text-danger" role="alert">
-            {errors.autoriza_datos}
-          </p>
-        )}
-      </Section>
-
       {state.formError && (
         <div
           role="alert"
