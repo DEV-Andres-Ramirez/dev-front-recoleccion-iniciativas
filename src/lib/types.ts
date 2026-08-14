@@ -1,3 +1,5 @@
+import type { FormState } from "@/lib/validation";
+
 // Fila completa de public.ofertas_ayuda tal como la devuelve resultados_listar.
 export type EstadoOferta = "pendiente" | "verificada" | "descartada";
 
@@ -28,3 +30,7 @@ export type Oferta = {
   created_at: string;
   updated_at: string;
 };
+
+// Estado del formulario de edición en /resultados: igual al del formulario
+// público, más la fila actualizada que devuelve la base al guardar.
+export type EditState = FormState & { oferta?: Oferta };
