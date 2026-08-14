@@ -200,10 +200,6 @@ function InnerForm({ onReset }: { onReset: () => void }) {
   const [state, formAction, pending] = useActionState(submitOferta, initialFormState);
   // País controlado: si no es Colombia, el departamento pasa a texto libre.
   const [pais, setPais] = useState("Colombia");
-  // Selects controlados: React 19 resetea los <select> no controlados al valor
-  // por defecto tras un envío con errores, perdiendo lo elegido.
-  const [tipoEntidad, setTipoEntidad] = useState("");
-  const [departamento, setDepartamento] = useState("");
 
   if (state.ok) {
     return <SuccessScreen onReset={onReset} />;
@@ -238,11 +234,13 @@ function InnerForm({ onReset }: { onReset: () => void }) {
           label="Tipo de persona o entidad"
           error={errors.tipo_entidad}
         >
+          {/* key: React 19 resetea los <select> tras un envío con errores; el
+              remount con el valor devuelto por el servidor preserva la elección */}
           <select
+            key={`tipo-${values?.tipo_entidad ?? ""}`}
             id="campo-tipo_entidad"
             name="tipo_entidad"
-            value={tipoEntidad}
-            onChange={(e) => setTipoEntidad(e.target.value)}
+            defaultValue={values?.tipo_entidad ?? ""}
             required
             aria-invalid={errors.tipo_entidad ? true : undefined}
             aria-describedby={errors.tipo_entidad ? "campo-tipo_entidad-error" : undefined}
@@ -386,10 +384,10 @@ function InnerForm({ onReset }: { onReset: () => void }) {
               error={errors.departamento}
             >
               <select
+                key={`dep-${values?.departamento ?? ""}`}
                 id="campo-departamento"
                 name="departamento"
-                value={departamento}
-                onChange={(e) => setDepartamento(e.target.value)}
+                defaultValue={values?.departamento ?? ""}
                 aria-invalid={errors.departamento ? true : undefined}
                 aria-describedby={
                   errors.departamento ? "campo-departamento-error" : undefined
@@ -405,26 +403,14 @@ function InnerForm({ onReset }: { onReset: () => void }) {
               </select>
             </FieldShell>
           ) : (
-            <FieldShell
-              id="campo-departamento"
+            <TextField
+              name="departamento"
               label="Departamento / región"
               optional
+              defaultValue={values?.departamento}
               error={errors.departamento}
-            >
-              <input
-                id="campo-departamento"
-                name="departamento"
-                type="text"
-                value={departamento}
-                onChange={(e) => setDepartamento(e.target.value)}
-                maxLength={LIMITS.departamento}
-                aria-invalid={errors.departamento ? true : undefined}
-                aria-describedby={
-                  errors.departamento ? "campo-departamento-error" : undefined
-                }
-                className={inputCls}
-              />
-            </FieldShell>
+              maxLength={LIMITS.departamento}
+            />
           )}
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
